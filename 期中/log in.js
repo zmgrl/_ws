@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<style>
+body
+{
+   background-color:#ECF5FF;
+}
+h1
+{
+   text-align:center;
+}
+.centerDiv 
+{
+  border: 3px outset white;  
+  text-align: center;
+  
+}
+</style>
+<head>
+<title>Log in</title>
+</head>
+<body>
+
+  <h1>Log in</h1>
+<Div class="centerDiv">
+  <form>
+    <label for="account">Account Name</label><br>
+    <input type="account" id="account" name="account"><br><br>
+    <label for="password">Password</label><br>
+    <input type="password" id="password" name="password"><br><br>
+    <input type="submit" id="send out" name="send out" value="send out"><br>
+  </form>
+    <a style="font-size:13px" href="">fogot password?</a><br>
+    <label style="font-size:13px">If you don't have an account</label><br>
+    <label style="font-size:13px">Please</label>   
+    <a style="font-size:13px" href="">create an account</a><br> 
+  <br>
+  </Div>
+</body>
+</html>
