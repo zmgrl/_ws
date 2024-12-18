@@ -67,7 +67,7 @@
     <h1>
       <label id="time">time: 60</label>
       <span style="margin: 0 20px;">|</span>
-      <label id="grade">grade: 0</label>
+      <label id="grade">grade: 0</label><p id="h"><p>
     </h1>
     <div class="game-board">
       <div class="mole" id="mole1"></div>
@@ -81,39 +81,73 @@
       <div class="mole" id="mole9"></div><br>
     </div>
     <p>
-      <input type="button" id="start" name="start" value="start" class="btn">
+      <button id="start" class="btn" onclick=startbtn()>start</button>
       <span style="margin: 0 20px;"></span>
-      <input type="button" id="stop" name="stop" value="stop" class="btn">         </p>
+      <button id="stop" class="btn" onclick=stopbtn()>stop</button>         </p>
   </div>
   <script>
     var grade = 0; 
     var time = 60;
     var flag = 0;
+    var timer;
+    
+    function startbtn()
+    {
+      if (flag === 0)
+      {
+        flag = 1;
+        document.getElementById("h").innerHTML = "Game Started!";
+        countdown();
+        showMole();
+      }
+      else if (flag === 1 && time ===0)
+      {
+        flag = 0;
+      }
+    }
+    
+    function stopbtn()
+    {
+      if (flag === 1)
+      {
+        flag = 0;
+        clearTimeout(timer); 
+        document.getElementById("h").innerHTML = "Game Stop!";
+      }
+    }
         
     function showMole()
     {
-      const moles = document.querySelectorAll('.mole');
-      moles.forEach(mole => mole.classList.remove('active'));
-      const randomMole = moles[Math.floor(Math.random() * moles.length)];
-      randomMole.classList.add('active');
-      if (time > 0)
+      if (flag === 1)
       {
-        const randomDelay = Math.floor(Math.random() * 1000) + 400;
-        setTimeout(showMole, randomDelay);
+        const moles = document.querySelectorAll('.mole');
+        moles.forEach(mole => mole.classList.remove('active'));
+        const randomMole = moles[Math.floor(Math.random() * moles.length)];
+        randomMole.classList.add('active');
+        if (time > 0)
+        {
+          const randomDelay = Math.floor(Math.random() * 1000) + 400;
+          setTimeout(showMole, randomDelay);
+        }
+      }
+      else if (flag === 0)
+      {
+        setTimeout(Mole);
       }
 
     }
     function countdown()
     {
-      if (time > 0) 
+      if (flag === 1 && time > 0) 
       {
         time -= 1;
         document.getElementById("time").innerHTML = "time: " + time;
-        setTimeout(countdown, 1000);
+        timer = setTimeout(countdown, 1000);
       } 
-      else 
+      else if (time ===0)
       {
         alert('遊戲結束！最終得分：' + grade);
+        flag = 0;
       }
     }
 
@@ -127,8 +161,8 @@
     });
     });
 
-    showMole();
-    countdown();
   </script>
 </body>
 </html>
+
+
