@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  .text 
+  {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  .game-board
+  {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    gap: 20px;
+  }
+  .mole
+  {
+    width: 100px;
+    height: 100px;
+    background-color: brown;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .active
+  {
+    background: blue;
+  }
+  .btn 
+  {
+    background-color:#B570D8;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    border: none;
+    padding: 5px 30px;
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #04AA6D;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 3px #999;
+    margin-right:10px;
+  }
+  .btn:hover
+  {
+    background-color: #3e8e41
+  }
+  .btn:active
+  {
+    background-color: #3e8e41;
+    box-shadow: 0 3px #666;
+    transform: translateY(2px);
+  }
+</style>
+</head>
+<body>
+  <div class="text">
+    <h1>打地鼠</h1>
+    <h1>
+      <label id="time">time: 60</label>
+      <span style="margin: 0 20px;">|</span>
+      <label id="grade">grade: 0</label>
+    </h1>
+    <div class="game-board">
+      <div class="mole" id="mole1"></div>
+      <div class="mole" id="mole2"></div>
+      <div class="mole" id="mole3"></div>
+      <div class="mole" id="mole4"></div>
+      <div class="mole" id="mole5"></div>
+      <div class="mole" id="mole6"></div>
+      <div class="mole" id="mole7"></div>
+      <div class="mole" id="mole8"></div>
+      <div class="mole" id="mole9"></div><br>
+    </div>
+    <p>
+      <input type="button" id="start" name="start" value="start" class="btn">
+      <span style="margin: 0 20px;"></span>
+      <input type="button" id="stop" name="stop" value="stop" class="btn">         </p>
+  </div>
+  <script>
+    var grade = 0; 
+    var time = 60;
+    var flag = 0;
+        
+    function showMole()
+    {
+      const moles = document.querySelectorAll('.mole');
+      moles.forEach(mole => mole.classList.remove('active'));
+      const randomMole = moles[Math.floor(Math.random() * moles.length)];
+      randomMole.classList.add('active');
+      if (time > 0)
+      {
+        const randomDelay = Math.floor(Math.random() * 1000) + 400;
+        setTimeout(showMole, randomDelay);
+      }
+
+    }
+    function countdown()
+    {
+      if (time > 0) 
+      {
+        time -= 1;
+        document.getElementById("time").innerHTML = "time: " + time;
+        setTimeout(countdown, 1000);
+      } 
+      else 
+      {
+        alert('遊戲結束！最終得分：' + grade);
+      }
+    }
+
+    document.querySelectorAll('.mole').forEach(mole =>{mole.addEventListener('click', () => {
+    if (time > 0 && mole.classList.contains('active')) 
+    {
+      mole.classList.remove('active');
+      grade += 1;
+      document.getElementById("grade").innerHTML = "grade: " + grade;
+    }
+    });
+    });
+
+    showMole();
+    countdown();
+  </script>
+</body>
+</html>
