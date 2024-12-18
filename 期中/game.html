@@ -100,10 +100,6 @@
         countdown();
         showMole();
       }
-      else if (flag === 1 && time ===0)
-      {
-        flag = 0;
-      }
     }
     
     function stopbtn()
@@ -130,8 +126,9 @@
           setTimeout(showMole, randomDelay);
         }
       }
-      else if (flag === 0)
+      else if (flag === 0 && time > 0)
       {
+        grade = grade - 1;
         setTimeout(Mole);
       }
 
@@ -164,5 +161,3 @@
   </script>
 </body>
 </html>
-
-
