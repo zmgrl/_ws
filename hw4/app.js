@@ -10,8 +10,8 @@ db.query("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT
 const router = new Router();
 
 router.get('/', list)
-  .get('/signup', signupUi)
-  .post('/signup', signup)
+  .get('/signup', signupUi) //顯示頁面
+  .post('/signup', signup) //處理請求
   .get('/login', loginUi)
   .post('/login', login)
   .get('/logout', logout)
