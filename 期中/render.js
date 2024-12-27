@@ -95,25 +95,13 @@ export function layout(title, content) {
     `)
     }
     
-  export function list(leaderboard, user) {
+  export function list(user) {
       console.log('list: user=', user)
-      let list = []
-      for (let player of leaderboard) {
-        list.push(`
-        <li>
-          <h2>${ player.username } -- by ${player.score}</h2>
-        </li>
-        `)
-      }
       let content = `
       <h1>打地鼠</h1>
       <p>${(user==null)?'<a href="/login">Login</a> ':'Welcome '+user.username+', You may <a href="/mole">play the game</a> or <a href="/logout">Logout</a> !'}</p>
-      <p>There are <strong>${leaderboard.length}</strong> posts!</p>
-      <ul id="leaderboard">
-        ${list.join('\n')}
-      </ul>
       `
-      return layout('Leaderboard', content)
+      return layout('Home', content)
     }
 
   export function listScoresByGame(leaderboard, game) {
@@ -232,10 +220,11 @@ export function layout(title, content) {
           <p>
             <button id="start" class="btn" onclick=startbtn()>start</button>
             <span style="margin: 0 20px;"></span>
-            <button id="stop" class="btn" onclick=stopbtn()>stop</button>         </p>
+            <button id="stop" class="btn" onclick=stopbtn()>stop</button>       
+          </p>
         </div>
       <script>
-        var grade = 0; 
+        var score = 0; 
         var time = 60;
         var flag = 0;
         var timer;
@@ -276,16 +265,16 @@ export function layout(title, content) {
             document.getElementById("time").innerHTML = "time: " + time;
             timer = setTimeout(countdown, 1000);
           } else if (time === 0) {
-            alert('遊戲結束！最終得分：' + grade);
+            alert('遊戲結束！最終得分：' + score);
             flag = 0;
 
             // 提交分數到後端
-            submitScore(grade);
+            submitScore(score);
           }
         }
 
-        function submitScore(grade) {
-            if (isNaN(grade) || grade < 0) {
+        function submitScore(score) {
+            if (isNaN(score) || score < 0) {
               alert('分數無效，請重新嘗試。');
               return;
             }
@@ -302,7 +291,7 @@ export function layout(title, content) {
               }
             }).then(response => {
               if (response.ok) {
-                window.location.href = `/scoreboard/scoreboard`;
+                window.location.href = `/scoreboard`;
               } else {
                 alert('提交分數失敗，請稍後再試。');
               }
@@ -317,7 +306,7 @@ export function layout(title, content) {
             if (time > 0 && mole.classList.contains('active')) {
               mole.classList.remove('active');
               grade += 1;
-              document.getElementById("grade").innerHTML = "grade: " + grade;
+              document.getElementById("grade").innerHTML = "grade: " + score;
             }
           });
         });

@@ -83,7 +83,27 @@ export function layout(user,title, content) {
     `
     return layout(user,'Posts', content)
   }
-  
+  export function userList(posts) {
+    let list = []
+    for (let post of posts) {
+      list.push(`
+      <li>
+        <h2>${ post.user }</h2>
+        <p><a href="/${post.user}">Read ${post.user}'s post list</a></p>
+      </li>
+      `)
+    }
+    let content = `
+    <h1>Users</h1>
+    <p><strong>${posts.length}</strong>user</p>
+    <p><a href="/user/new">Create</a></p>
+    <ul id="posts">
+      ${list.join('\n')}
+    </ul>
+    `
+    return layout('', 'Users', content)
+  }
+
   export function newPost(user) {
     return layout('New Post', user,`
     <p>Create a new post.</p>
@@ -95,7 +115,7 @@ export function layout(user,title, content) {
     `)
   }
   
-  export function show(user,post) {
+  export function show(user, post) {
     return layout(user,post.title, `
       <h1>${post.title}</h1>
       <p>${post.body}</p>

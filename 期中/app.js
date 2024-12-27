@@ -152,7 +152,7 @@ async function addScore(ctx) {
   }
 
   const formData = await body.value; 
-  const score = parseInt(formData.get('grade'), 10); 
+  const score = parseInt(formData.get('score'), 10); 
   const player = formData.get('player'); 
 
   if (isNaN(score) || !player) {
